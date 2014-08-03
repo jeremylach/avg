@@ -210,8 +210,8 @@ function custom_post_type_init() {
     $post_types = array(
         array("slug" => "unit", "plural" => "Units", "singular" => "Unit", "rewrite" => "unit", "public" => true, "archive" => true, "supports" => array('title')),
 	array("slug" => "key", "plural" => "Keys", "singular" => "Key", "rewrite" => "key", "public" => true, "archive" => true, "supports" => array('title')),
-        array("slug" => "entity", "plural" => "Entities", "singular" => "Entity", "rewrite" => "entity", "public" => true, "archive" => true, "supports" => array('title','editor', 'thumbnail')),
-        array("slug" => "faq", "plural" => "Faq", "singular" => "Faqs", "rewrite" => "faq", "public" => true, "archive" => true, "supports" => array('title','editor'))
+        array("slug" => "entity", "plural" => "Entities", "singular" => "Entity", "rewrite" => "entity", "public" => true, "archive" => true, "supports" => array('title', 'category', 'editor', 'thumbnail'))
+        //array("slug" => "faq", "plural" => "Faq", "singular" => "Faqs", "rewrite" => "faq", "public" => true, "archive" => true)
     );  
     foreach ($post_types as $pt) {
         $supports = array('title', 'editor', 'post_tags', 'thumbnail', 'excerpt', "comments");
@@ -228,17 +228,17 @@ function custom_post_type_init() {
             'rewrite' => array('hierarchical' => true, 'with_front' => true, 'slug' => isset($pt["rewrite"]) ? $pt["rewrite"] : $pt["slug"]),
             'supports' => isset($pt['supports']) ? $pt['supports'] : $supports,
             'taxonomies' => isset($pt['taxonomies']) ? $pt['taxonomies'] : array('post_tag'),
-            'hierarchical' => false
+            'hierarchical' => false,
                 )
         );
     }
 }
 add_action('init', 'custom_post_type_init');
 add_action( 'init', 'create_my_taxonomies', 0 );
+
 function create_my_taxonomies() {
     $taxonomies = array(
-        array("name_tax" => "category-festival", "related_tax" => "festival", "name" => "Category Festival", "add_new_item" => "Add New Festival Category", "new_item_name" => "New Type Category"),
-        array("name_tax" => "category-news", "related_tax" => "news", "name" => "Category News", "add_new_item" => "Add New Category", "new_item_name" => "New Type Category")
+        array("name_tax" => "entity-type", "related_tax" => "entity", "name" => "Entity Type", "add_new_item" => "Add New Entity Type", "new_item_name" => "New Entity Type")
     );
     foreach ($taxonomies as $tax) {
         register_taxonomy(
